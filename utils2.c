@@ -6,7 +6,7 @@
 /*   By: zjamaien <zjamaien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 22:29:27 by alalauty          #+#    #+#             */
-/*   Updated: 2025/05/09 17:14:49 by zjamaien         ###   ########.fr       */
+/*   Updated: 2025/05/10 19:18:14 by zjamaien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,56 +25,58 @@ char	*ft_strjoin3(const char *s1, const char *s2, const char *s3)
 	return (result);
 }
 
-char	*helper_tojoin4(const char *s1, const char *s2, const char *s3)
+static void	ft_free(char **s1, char **s2, char **s3)
+{
+	if (*s1)
+		free(*s1);
+	if (*s2)
+		free(*s2);
+	if (*s3)
+		free(*s3);
+}
+
+static char	*handle_qoute(char *s1, char *s2, char *s3)
 {
 	char	*tmp;
 	char	*result;
 	char	*q;
+	char	*x;
+	char	*t;
 
 	tmp = ft_strjoin(s1, s2);
 	if (!tmp)
 		return (NULL);
-	s3 = ft_strtrim(s3, "\'");
-	q = ft_strjoin("\"", s3);
-	if (!q)
-	{
-		free(tmp);
+	t = s3;
+	t = ft_strtrim(s3, "\'");
+	x = q;
+	x = ft_strjoin("\"", t);
+	if (!x)
 		return (NULL);
-	}
-	result = ft_strjoin(tmp, q);
-	free(tmp);
-	free(q);
+	result = ft_strjoin(tmp, x);
 	if (!result)
 		return (NULL);
+	free(tmp);
 	tmp = result;
 	result = ft_strjoin(result, "\"");
-	free(tmp);
+	ft_free(&tmp, &x, &t);
 	return (result);
 }
 
-char	*ft_strjoin4(const char *s1, const char *s2, const char *s3)
+char	*ft_strjoin4(char *s1, char *s2, char *s3)
 {
-	char	*tmp;
 	char	*result;
-	char	*q;
 
 	if (s3[0] != '\"' && s3[ft_strlen(s3) - 1] != '\"')
-		result = helper_tojoin4(s1, s2, s3);
+		result = handle_qoute(s1, s2, s3);
 	else
-	{
-		tmp = ft_strjoin(s1, s2);
-		if (!tmp)
-			return (NULL);
-		result = ft_strjoin(tmp, s3);
-		free(tmp);
-	}
+		result = ft_strjoin3(s1, s2, s3);
 	return (result);
 }
 
 char	**ft_realloc_strarr(char **arr, size_t new_size)
 {
-	char	**new;
-	size_t	i;
+	char **new;
+	size_t i;
 
 	new = malloc(new_size * sizeof(char *));
 	if (!new)
