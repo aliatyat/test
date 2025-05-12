@@ -6,14 +6,12 @@
 /*   By: zjamaien <zjamaien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 22:30:23 by zjamaien          #+#    #+#             */
-/*   Updated: 2025/05/12 14:59:44 by zjamaien         ###   ########.fr       */
+/*   Updated: 2025/05/12 15:07:02 by zjamaien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#define AC n[0]
-#define R n[1]
-#define START n[2]
+
 char	**gather_back(char **tokens, char *cmd, char **args, char **redir)
 {
 	int	i;
@@ -70,27 +68,27 @@ void	fill_args_and_redir(char **tokens, char **args, char **redir,
 	int	n[3];
 
 	ft_memset(n, 0, sizeof(n));
-	while (START < count_tokens2(tokens))
+	while (n[2] < count_tokens2(tokens))
 	{
-		if (is_redirection(tokens[START]) && (START < count_tokens2(tokens)))
+		if (is_redirection(tokens[n[2]]) && (n[2] < count_tokens2(tokens)))
 		{
-			if (is_redirection_token(tokens[START]) && tokens[START + 1])
+			if (is_redirection_token(tokens[n[2]]) && tokens[n[2] + 1])
 			{
-				redir[R] = join_red(tokens[START], tokens[START + 1], &START);
-				if (protect_redir(redir[R], redir, args) == -1)
+				redir[n[1]] = join_red(tokens[n[2]], tokens[n[2] + 1], &n[2]);
+				if (protect_redir(redir[n[1]], redir, args) == -1)
 					return ;
-				R++;
+				n[1]++;
 			}
 			else
-				redir[R++] = ft_strdup(tokens[START]);
+				redir[n[1]++] = ft_strdup(tokens[n[2]]);
 		}
 		else if (!(*cmd))
-			*cmd = ft_strdup(tokens[START]);
+			*cmd = ft_strdup(tokens[n[2]]);
 		else
-			args[AC++] = ft_strdup(tokens[START]);
-		START++;
+			args[n[0]++] = ft_strdup(tokens[n[2]]);
+		n[2]++;
 	}
-	null_terminate(redir, args, AC++, R++);
+	null_terminate(redir, args, n[0]++, n[1]++);
 }
 
 int	count_heredocs(char **tokens)
