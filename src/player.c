@@ -4,7 +4,7 @@ void init_player(t_player *player)
 {
     player->x = WIDTH / 2;
     player->y = HEIGHT / 2;
-    player->angle = PI / 2;
+    player->angle = 0;
 
     player->key_up = false;
     player->key_down = false;
@@ -30,6 +30,8 @@ int key_press(int keycode, t_player *player)
         player->left_rotate = true;
     if(keycode == RIGHT)
         player->right_rotate = true;
+    if (keycode == ESC)
+        exit (0);
     return 0;
 }
 

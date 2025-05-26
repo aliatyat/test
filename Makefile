@@ -1,4 +1,4 @@
-NAME = game 
+NAME = cub3d
 CC = cc
 OBJ = $(SRC:.c=.o)
 CFLAGS = -g
