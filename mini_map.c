@@ -11,6 +11,13 @@
 /* ************************************************************************** */
 
 
+#define TILE_SIZE	10   // pixels per map tile
+#define MINIMAP_W   (WIDTH * TILE_SIZE )
+#define MINIMAP_H   (HEIGHT * TILE_SIZE)
+#define OFFSET_X    (WIDTH + MINIMAP_W - 10000) // 10px from right edge
+#define OFFSET_Y     1                    // 10px from top
+
+
 typedef struct s_min_map
 {
 	int x;
