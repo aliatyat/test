@@ -68,3 +68,29 @@ void draw_minimap(t_game *g)
 		tmm.y++;
 	}
 }
+
+void draw_minimap_player(t_game *g)
+{
+	int px;
+	int py;
+	int	dy;
+	int	dx;
+	
+	dy = -2;
+	dx = -2;
+	px = OFFSET_X + g->player.x * TILE_SIZE;
+	py = OFFSET_Y + g->player.y * TILE_SIZE;
+	while (dy <= 2)
+	{
+		while (dx <= 2)
+		{
+			mlx_put_pixel(g->img, px + dx, py + dy, 0xFF0000FF);
+			mlx_put_pixel(g->img, px + dx + 1, py + dy + 1, 0xFF0000FF);
+			mlx_put_pixel(g->img, px + dx, py + dy, 0xFF0000FF);
+			mlx_put_pixel(g->img, px + dx - 1, py + dy - 1, 0xFF0000FF);
+			dx++;
+		}
+		dy++;
+	}
+}
+
